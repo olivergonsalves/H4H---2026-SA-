@@ -106,35 +106,6 @@ If ElevenLabs keys are missing, the app falls back to Apple TTS so it still runs
 - **Single TTS voice** — ElevenLabs used everywhere (welcome, onboarding, guidance, Q&A) for consistency.
 - **Safety note** — The app reminds users that it is an assistive tool and to keep using a cane or guide and stay aware of surroundings.
 
----
-
-## Project structure
-
-```
-SceneAssist/
-├── SceneAssistApp.swift          # App entry, SwiftData container
-├── ContentView.swift             # Root: Start Guide vs Camera; sheets (Transcripts, Onboarding)
-├── StartGuideView.swift          # “How it works” + Start / Hear instructions again (voice)
-├── OnboardingView.swift         # Height entry UI
-├── OnboardingVoiceCoordinator.swift  # Voice-based height flow (ElevenLabs + speech recognition)
-├── AppInstructions.swift        # Shared “how to use” text (start guide + in-app repeat)
-├── SceneAssistController.swift   # Scanning loop, voice commands, LLM Q&A, scene → speech
-├── CameraService.swift           # AVCaptureSession, frame delivery
-├── CameraPreview.swift           # SwiftUI wrapper for camera layer
-├── CloudVisionService.swift      # OpenAI image → VisionScene (items, signs, utterances)
-├── LLMBrainService.swift        # OpenAI Q&A → BrainPlan (say, action, target, memory)
-├── SpeechManager.swift          # ElevenLabs vs Apple TTS, playback, onFinished
-├── ElevenLabsTTSService.swift   # ElevenLabs API → MP3
-├── VoiceInputService.swift      # SFSpeechRecognizer, mic buffer → latestText
-├── TranscriptStore.swift        # In-memory + file transcript list
-├── TranscriptView.swift         # Transcript list UI
-├── UserProfileStore.swift       # UserDefaults height (cm)
-├── Secrets.swift                # API keys (do not commit)
-├── ObjectDetector.swift         # (Optional) YOLO/on-device detection
-├── HumanDetector.swift          # (Optional) Vision human rectangles
-├── OCRService.swift             # (Optional) Vision text recognition
-└── ...
-```
 
 ---
 
