@@ -1,61 +1,89 @@
-//
-//  ContentView.swift
-//  SceneAssist
-//
-//  Created by Shwetalee Gadekar on 2/24/26.
-//
-
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    
+    @StateObject private var controller = SceneAssistController()
+    @State private var showTranscripts = false
+    
+    @StateObject private var profile = UserProfileStore()
+    @State private var showOnboarding = false
+    @AppStorage("hasSeenStartGuide") private var hasSeenStartGuide: Bool = false
+    @State private var showStartGuide = false
+    @State private var hasStartedController = false
+    
+    var heightCm: Double? = nil
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        Group {
+            if showStartGuide {
+                StartGuideView {
+                    hasSeenStartGuide = true
+                    showStartGuide = false
+                    startControllerAndMaybeOnboard()
+                }
+            } else {
+                ZStack(alignment: .bottom) {
+                    CameraPreview(session: controller.camera.session)
+                        .ignoresSafeArea()
+                        .overlay(
+                            Color.clear
+                                .contentShape(Rectangle())
+                                .onLongPressGesture(minimumDuration: 0.2, pressing: { pressing in
+                                    if pressing {
+                                        controller.beginVoice()
+                                    } else {
+                                        controller.endVoice()
+                                    }
+                                }, perform: {})
+                        )
+                    
+                    Button(action: {
+                        showTranscripts = true
+                    }) {
+                        Text("Transcripts")
+                            .font(.headline)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 24)
+                            .background(.black.opacity(0.7))
+                            .foregroundColor(.white)
+                            .clipShape(Capsule())
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
+                    .padding(.bottom, 30)
                 }
             }
-        } detail: {
-            Text("Select an item")
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+        .onAppear {
+            controller.heightCm = profile.heightCm
+            if hasSeenStartGuide {
+                startControllerAndMaybeOnboard()
+            } else {
+                showStartGuide = true
+            }
         }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+        .onDisappear {
+            controller.stop()
+        }
+        .sheet(isPresented: $showTranscripts) {
+            TranscriptView(store: controller.transcriptStore)
+        }
+        .sheet(isPresented: $showOnboarding) {
+            OnboardingView(profile: profile)
+        }
+        .onChange(of: profile.heightCm) { newHeight in
+            controller.heightCm = newHeight
+            if profile.hasHeight {
+                showOnboarding = false
+                startControllerAndMaybeOnboard()
             }
         }
     }
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    
+    private func startControllerAndMaybeOnboard() {
+        // Start scanning only after height is stored (so we don't talk over the height prompt).
+        if profile.hasHeight, !hasStartedController {
+            controller.start()
+            hasStartedController = true
+        }
+        showOnboarding = !profile.hasHeight
+    }
 }

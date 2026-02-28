@@ -29,9 +29,22 @@
 		E277F4762F4E9C8000D93A41 /* SceneAssistUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SceneAssistUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E277F48A2F4E9ED500D93A41 /* Exceptions for "SceneAssist" folder in "SceneAssist" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E277F45C2F4E9C7C00D93A41 /* SceneAssist */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E277F45F2F4E9C7C00D93A41 /* SceneAssist */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E277F48A2F4E9ED500D93A41 /* Exceptions for "SceneAssist" folder in "SceneAssist" target */,
+			);
 			path = SceneAssist;
 			sourceTree = "<group>";
 		};
@@ -395,8 +408,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3M83FX7SB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SceneAssist/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "SceneAssist needs the camera to describe surroundings.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SceneAssist needs the microphone for voice questions.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SceneAssist needs speech recognition to understand your questions.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -407,7 +425,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sceneassist.SceneAssist;
+				PRODUCT_BUNDLE_IDENTIFIER = sceneassist.SceneAssist4.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -426,8 +444,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3M83FX7SB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SceneAssist/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "SceneAssist needs the camera to describe surroundings.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SceneAssist needs the microphone for voice questions.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SceneAssist needs speech recognition to understand your questions.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -438,7 +461,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.sceneassist.SceneAssist;
+				PRODUCT_BUNDLE_IDENTIFIER = sceneassist.SceneAssist4.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
