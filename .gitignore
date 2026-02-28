@@ -1,0 +1,10 @@
+# Xcode
+DerivedData/
+build/
+*.xcworkspace
+xcuserdata/
+.DS_Store
+
+# Secrets
+Secrets.swift
+*.env
