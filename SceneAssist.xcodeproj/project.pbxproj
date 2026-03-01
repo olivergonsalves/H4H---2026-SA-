@@ -408,13 +408,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3M83FX7SB9;
+				DEVELOPMENT_TEAM = F7CBFYM7C7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SceneAssist/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "SceneAssist needs the camera to describe surroundings.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SceneAssist needs the microphone for voice questions.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SceneAssist needs speech recognition to understand your questions.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "SceneAssist needs camera access to describe what is in front of you.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SceneAssist needs microphone access for voice commands.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SceneAssist uses speech recognition to understand your voice.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -425,7 +425,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sceneassist.SceneAssist4.com;
+				PRODUCT_BUNDLE_IDENTIFIER = sceneassist.SceneAssist10.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -444,13 +444,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 3M83FX7SB9;
+				DEVELOPMENT_TEAM = F7CBFYM7C7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SceneAssist/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "SceneAssist needs the camera to describe surroundings.";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SceneAssist needs the microphone for voice questions.";
-				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SceneAssist needs speech recognition to understand your questions.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "SceneAssist needs camera access to describe what is in front of you.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SceneAssist needs microphone access for voice commands.";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "SceneAssist uses speech recognition to understand your voice.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -461,7 +461,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = sceneassist.SceneAssist4.com;
+				PRODUCT_BUNDLE_IDENTIFIER = sceneassist.SceneAssist10.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

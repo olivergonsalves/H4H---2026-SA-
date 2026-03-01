@@ -1,6 +1,8 @@
 import SwiftUI
 import AVFoundation
 import UIKit
+import ARKit
+import SceneKit
 
 final class PreviewView: UIView {
     override class var layerClass: AnyClass {
@@ -24,5 +26,22 @@ struct CameraPreview: UIViewRepresentable {
 
     func updateUIView(_ uiView: PreviewView, context: Context) {
         uiView.videoPreviewLayer.session = session
+    }
+}
+
+// MARK: - ARKit preview (LiDAR devices)
+
+struct ARSessionPreview: UIViewRepresentable {
+    let session: ARSession
+
+    func makeUIView(context: Context) -> ARSCNView {
+        let view = ARSCNView()
+        view.session = session
+        view.automaticallyUpdatesLighting = true
+        return view
+    }
+
+    func updateUIView(_ uiView: ARSCNView, context: Context) {
+        uiView.session = session
     }
 }

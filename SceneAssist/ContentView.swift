@@ -1,30 +1,49 @@
+//  ContentView.swift
+//  SceneAssist
+
 import SwiftUI
 
 struct ContentView: View {
-    
+
+    @StateObject private var profile    = UserProfileStore()
     @StateObject private var controller = SceneAssistController()
-    @State private var showTranscripts = false
-    
-    @StateObject private var profile = UserProfileStore()
-    @State private var showOnboarding = false
+
     @AppStorage("hasSeenStartGuide") private var hasSeenStartGuide: Bool = false
-    @State private var showStartGuide = false
+    @State private var showStartGuide       = false
     @State private var hasStartedController = false
-    
-    var heightCm: Double? = nil
-    
+    @State private var showTranscripts      = false
+
     var body: some View {
         Group {
-            if showStartGuide {
-                StartGuideView {
-                    hasSeenStartGuide = true
-                    showStartGuide = false
-                    startControllerAndMaybeOnboard()
+            if !profile.hasLanguage {
+                // First ever launch — voice language selection
+                LanguageSelectionView { chosen in
+                    profile.saveLanguage(chosen)
+                    controller.setLanguage(chosen)
+                    proceedToNextStep()
                 }
+
+            } else if showStartGuide {
+                // First ever launch — start guide
+                StartGuideView(language: profile.savedLanguage ?? .english) {
+                    hasSeenStartGuide = true
+                    showStartGuide    = false
+                    startController()
+                }
+
             } else {
+                // Every launch after setup — camera view
                 ZStack(alignment: .bottom) {
-                    CameraPreview(session: controller.camera.session)
-                        .ignoresSafeArea()
+                    Group {
+                        if let avSession = controller.camera.avCaptureSession {
+                            CameraPreview(session: avSession)
+                        } else if let arSession = controller.camera.arSession {
+                            ARSessionPreview(session: arSession)
+                        } else {
+                            Color.black
+                        }
+                    }
+                    .ignoresSafeArea()
                         .overlay(
                             Color.clear
                                 .contentShape(Rectangle())
@@ -36,10 +55,8 @@ struct ContentView: View {
                                     }
                                 }, perform: {})
                         )
-                    
-                    Button(action: {
-                        showTranscripts = true
-                    }) {
+
+                    Button(action: { showTranscripts = true }) {
                         Text("Transcripts")
                             .font(.headline)
                             .padding(.vertical, 12)
@@ -53,11 +70,20 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            if let lang = profile.savedLanguage {
+                controller.setLanguage(lang)
+            }
+            if !profile.hasHeight {
+                profile.saveHeightCm(170.0)
+            }
             controller.heightCm = profile.heightCm
-            if hasSeenStartGuide {
-                startControllerAndMaybeOnboard()
-            } else {
-                showStartGuide = true
+
+            if profile.hasLanguage {
+                if hasSeenStartGuide {
+                    startController()
+                } else {
+                    showStartGuide = true
+                }
             }
         }
         .onDisappear {
@@ -66,24 +92,26 @@ struct ContentView: View {
         .sheet(isPresented: $showTranscripts) {
             TranscriptView(store: controller.transcriptStore)
         }
-        .sheet(isPresented: $showOnboarding) {
-            OnboardingView(profile: profile)
+    }
+
+    private func proceedToNextStep() {
+        if !profile.hasHeight {
+            profile.saveHeightCm(170.0)
         }
-        .onChange(of: profile.heightCm) { newHeight in
-            controller.heightCm = newHeight
-            if profile.hasHeight {
-                showOnboarding = false
-                startControllerAndMaybeOnboard()
-            }
+        controller.heightCm = profile.heightCm
+
+        if hasSeenStartGuide {
+            startController()
+        } else {
+            showStartGuide = true
         }
     }
-    
-    private func startControllerAndMaybeOnboard() {
-        // Start scanning only after height is stored (so we don't talk over the height prompt).
-        if profile.hasHeight, !hasStartedController {
-            controller.start()
-            hasStartedController = true
-        }
-        showOnboarding = !profile.hasHeight
+
+    private func startController() {
+        guard !hasStartedController else { return }
+        hasStartedController = true
+        controller.heightCm  = profile.heightCm
+        controller.start()
     }
 }
+
